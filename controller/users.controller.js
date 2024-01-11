@@ -46,11 +46,29 @@ const changePassword = async (req, res) => {
   }
 };
 
-const changeProfilePicture = async (req, res) => {};
+const changeProfilePicture = async (req, res) => {
+  const { email, newProfilePicture } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      const updatedUser = await User.findOneAndUpdate(
+        { email },
+        { profilePicture: newProfilePicture },
+        { new: true }
+      );
+      res.json(updatedUser);
+    }
+  } catch (error) {
+    res.status(404).json({ error: "User not found!" });
+  }
+};
+
+const updateContactDetails = (req, res) => {};
 
 module.exports = {
   signup,
   login,
   changePassword,
   changeProfilePicture,
+  updateContactDetails,
 };
