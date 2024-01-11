@@ -83,10 +83,25 @@ const updateContactDetails = async (req, res) => {
   }
 };
 
+const findUserByPhoneNumber = async (req, res) => {
+  const phoneNumber = req.params.phoneNumber;
+  try {
+    const user = await User.findOne({ phoneNumber });
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json("User not found");
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   signup,
   login,
   changePassword,
   changeProfilePicture,
   updateContactDetails,
+  findUserByPhoneNumber,
 };
