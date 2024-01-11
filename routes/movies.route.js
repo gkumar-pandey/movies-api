@@ -10,6 +10,7 @@ const {
   deleteMovieById,
   getAllMoviesByRating,
   getAllMoviesByReleaseYear,
+  addRating,
 } = require("../controller/movies.controller");
 
 const movieRouter = express.Router();
@@ -22,7 +23,8 @@ movieRouter.get("/director/:directorName", readMoviesByDirectorName);
 movieRouter.get("/genre/:genreName", readMoviesByGenere);
 movieRouter.post("/:movieId", updateMovie);
 movieRouter.delete("/:movieId", deleteMovieById);
-movieRouter.get("/movies/rating", getAllMoviesByRating);
-movieRouter.get("/movies/release-year", getAllMoviesByReleaseYear);
+movieRouter.get("/rating", getAllMoviesByRating);
+movieRouter.get("/release-year", getAllMoviesByReleaseYear);
+movieRouter.post("/:movieId/rating", addRating);
 
 module.exports = movieRouter;

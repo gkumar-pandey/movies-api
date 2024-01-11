@@ -157,6 +157,29 @@ const getAllMoviesByReleaseYear = async (req, res) => {
   }
 };
 
+// Update Rating
+const addRating = async (req, res) => {
+  const rating = req.body.rating;
+  const movieId = req.params.movieId;
+  try {
+    if (rating < 0 || rating > 10) {
+      res.status(400).json({ error: "Rating must be between 0 and 10" });
+    }
+
+    const movie = await Movie.findById(movieId);
+    if (!movie) {
+      res.status(404).json({ error: "Movie not found" });
+    }
+
+    movie.rating = rating;
+    await movie.save();
+    res.json({ message: "Rating updated successfully", movie });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error!" });
+    throw error;
+  }
+};
+
 module.exports = {
   readMovieByTitle,
   createMovie,
@@ -168,4 +191,5 @@ module.exports = {
   deleteMovieById,
   getAllMoviesByRating,
   getAllMoviesByReleaseYear,
+  addRating,
 };
