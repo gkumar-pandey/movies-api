@@ -63,7 +63,25 @@ const changeProfilePicture = async (req, res) => {
   }
 };
 
-const updateContactDetails = (req, res) => {};
+const updateContactDetails = async (req, res) => {
+  const { phoneNumber, address } = req.body;
+  const email = req.params.email;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      const updatedUser = await User.findOneAndUpdate(
+        { email },
+        { phoneNumber, address },
+        { new: true }
+      );
+      res.json(updatedUser);
+    } else {
+      res.json({ error: "User not found" });
+    }
+  } catch (error) {
+    res.status(404).json({ error: "Internal server error" });
+  }
+};
 
 module.exports = {
   signup,
