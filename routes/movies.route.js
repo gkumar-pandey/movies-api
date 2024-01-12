@@ -11,6 +11,7 @@ const {
   getAllMoviesByRating,
   getAllMoviesByReleaseYear,
   addRating,
+  addReviews,
 } = require("../controller/movies.controller");
 
 const movieRouter = express.Router();
@@ -26,5 +27,6 @@ movieRouter.delete("/:movieId", deleteMovieById);
 movieRouter.get("/rating", getAllMoviesByRating);
 movieRouter.get("/release-year", getAllMoviesByReleaseYear);
 movieRouter.post("/:movieId/rating", addRating);
+movieRouter.post("/:movieId/reviews", addReviews);
 
 module.exports = movieRouter;

@@ -180,6 +180,31 @@ const addRating = async (req, res) => {
   }
 };
 
+// Add reviews
+const addReviews = async (req, res) => {
+  const { review, userId } = req.body;
+  const movieId = req.params.movieId;
+  const newReview = {
+    user: userId,
+    text: review,
+  };
+  try {
+    const movie = await Movie.findById(movieId);
+    if (!movie) {
+      res.status(404).json({ error: "Movie not found" });
+    }
+    movie.reviews.push(newReview);
+    await movie.save();
+    const updatedMovieWithReviews = await Movie.findById(movieId).populate({
+      path: "reviews.user",
+      select: "username profilePicture",
+    });
+    res.json({ data: { movie: updatedMovieWithReviews } });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   readMovieByTitle,
   createMovie,
@@ -192,4 +217,5 @@ module.exports = {
   getAllMoviesByRating,
   getAllMoviesByReleaseYear,
   addRating,
+  addReviews,
 };
