@@ -1,45 +1,36 @@
 const User = require("../model/user.modal");
+const { comparePassword } = require("../utils");
 
-// signup
-const signup = async (req, res) => {
-  const userData = req.body;
-  try {
-    const user = new User(userData);
-    const newUser = await user.save();
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to create user account" });
-  }
-};
-
-// login
-const login = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (user && password === user.password) {
-      res.status(200).json(user);
-    } else {
-      res.json({ error: "Invalid credentials" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
-    throw error;
-  }
-};
-
+/**
+ * @route POST /user/:userId/password
+ * @description Handles the change of user passwords.
+ * @param {Object} req - Express request object containing user credentials and new password.
+ * @param {Object} res - Express response object.
+ * @returns {Object} JSON response indicating password change success or failure.
+ */
 const changePassword = async (req, res) => {
-  const { email, currPassword, newPassword } = req.body;
+  const { currentPassword, newPassword } = req.body;
+  const { userId } = req.params;
   try {
-    const user = User.findOne({ email });
-    if (user.password === currPassword) {
-      const updatedUser = await User.findOneAndUpdate(
-        { email },
-        { password: newPassword },
-        { new: true }
-      );
-      res.json(updatedUser);
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not exist" });
     }
+
+    const isPasswordMatched = comparePassword(currentPassword, user.password);
+
+    if (!isPasswordMatched) {
+      return res.status(500).json({ message: "current password not matched" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { password: newPassword },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ message: "Password updated successfully.", user: updatedUser });
   } catch (error) {
     res.status(401).json({ error: "Invalid credentials" });
     throw error;
@@ -47,19 +38,27 @@ const changePassword = async (req, res) => {
 };
 
 const changeProfilePicture = async (req, res) => {
-  const { email, newProfilePicture } = req.body;
+  const { newProfilePicture } = req.body;
+  const userId = req.params;
+  if (userId !== req.user.userId) {
+    return res
+      .status(401)
+      .json({ message: "Unauthorised access, please add the token" });
+  }
+
   try {
-    const user = await User.findOne({ email });
-    if (user) {
-      const updatedUser = await User.findOneAndUpdate(
-        { email },
-        { profilePicture: newProfilePicture },
-        { new: true }
-      );
-      res.json(updatedUser);
-    }
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profileImageUrl: newProfilePicture },
+      { new: true }
+    );
+    res.status(201).json({
+      message: "Profile picture updated successfully.",
+      user: updatedUser,
+    });
   } catch (error) {
-    res.status(404).json({ error: "User not found!" });
+    res.status(404).json({ error: "Internal server error" });
+    throw error;
   }
 };
 
@@ -98,8 +97,6 @@ const findUserByPhoneNumber = async (req, res) => {
 };
 
 module.exports = {
-  signup,
-  login,
   changePassword,
   changeProfilePicture,
   updateContactDetails,

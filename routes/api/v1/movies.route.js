@@ -2,7 +2,6 @@ const express = require("express");
 const {
   readAllMovies,
   createMovie,
-  readMovieByTitle,
   readMovieByActorName,
   readMoviesByDirectorName,
   readMoviesByGenere,
@@ -12,7 +11,8 @@ const {
   getAllMoviesByReleaseYear,
   addRating,
   addReviews,
-} = require("../controller/movies.controller");
+  readMovieByTitle,
+} = require("../../../controller/movies.controller");
 
 const movieRouter = express.Router();
 

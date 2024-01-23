@@ -1,16 +1,19 @@
 const express = require("express");
 const connectDb = require("./db/db");
-const movieRouter = require("./routes/movies.route");
-const UsersRoute = require("./routes/users.route");
 const {
   error404Handler,
   errorHandler,
 } = require("./middleware/ErrorHandler.middleware");
+const routes = require("./routes");
 const helmet = require("helmet");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 const cors = require("cors");
+
 app.use(helmet());
 const allowedOrigins = ["http://localhost:3000"];
 
@@ -28,12 +31,7 @@ app.use(
 
 connectDb();
 
-app.get("/", (req, res) => {
-  res.json("Hello express");
-});
-
-app.use("/movies", movieRouter);
-app.use("/user", UsersRoute);
+app.use("/", routes);
 
 //404 error handler
 app.use(error404Handler);
