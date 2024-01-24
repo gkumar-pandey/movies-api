@@ -5,11 +5,13 @@ const authVerification = async (req, res, next) => {
     const token = req.headers.authorization;
     const decodedToken = decodeToken(token);
     const userId = extractUserIdFromToken(decodedToken);
-    req.user = { userId };
+    req.user = { id: userId };
     return next();
   } catch (error) {
     console.log(error);
-    res.status(401).json({ message: "Unauthorized user" });
+    res
+      .status(401)
+      .send({ success: false, message: "Please provide Auth token", error });
     throw error;
   }
 };

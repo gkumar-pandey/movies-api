@@ -35,17 +35,11 @@ const signup = async (req, res) => {
     // response with token
     const payloadForToken = { _id: newUser._id, email: newUser.email };
     const token = generateToken(payloadForToken);
-
+    // hide password in response
+    newUser.password = undefined;
     res.status(201).json({
       message: "signup successfully",
-      user: {
-        _id: newUser._id,
-        username: newUser.username,
-        email: newUser.email,
-        profileImageUrl: newUser?.profileImageUrl,
-        createdAt: newUser?.createdAt,
-        updatedAt: newUser?.updatedAt,
-      },
+      user: newUser,
       token: token,
     });
   } catch (error) {
@@ -88,17 +82,12 @@ const login = async (req, res) => {
       email: existingUser.email,
     };
     const token = generateToken(payloadForToken);
+    // Hide password
+    existingUser.password = undefined;
     res.status(200).json({
       message: "Login successfully",
       token,
-      user: {
-        _id: existingUser?._id,
-        username: existingUser?.username,
-        email: existingUser?.email,
-        profileImageUrl: existingUser?.profileImageUrl,
-        createdAt: existingUser?.createdAt,
-        updatedAt: existingUser?.updatedAt,
-      },
+      user: existingUser,
     });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
