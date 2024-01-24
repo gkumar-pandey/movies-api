@@ -53,22 +53,17 @@ const changePassword = async (req, res) => {
  */
 const changeProfilePicture = async (req, res) => {
   const { newProfilePicture } = req.body;
-  const { userId } = req.params;
-  if (userId !== req.user.userId) {
-    return res
-      .status(401)
-      .json({ message: "Unauthorised access, please add the token" });
-  }
+  const userId = req.user.id;
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { profileImageUrl: newProfilePicture },
+      { profilePicture: newProfilePicture },
       { new: true }
     );
 
     // hide password
-    updatedUser.password = undefined;
+    // updatedUser.password = undefined;
 
     // send updated user
     res.status(200).json({
@@ -86,9 +81,10 @@ const changeProfilePicture = async (req, res) => {
 
 /**
  * @route POST /api/v1/user/update-contact
- * @description
- * @param {*} req
- * @param {*} res
+ * @description Update user contact details
+ * @param {Object} req Express request object containing user contact details in the body
+ * @param {Object} res Express response object containing updated user details or an error message
+ * @returns {void}
  */
 const updateContactDetails = async (req, res) => {
   const { phoneNumber, address } = req.body;
@@ -125,6 +121,13 @@ const updateContactDetails = async (req, res) => {
   }
 };
 
+/**
+ * @route GET /api/v1/user/:phoneNumber
+ * @description Find a user by their phone number
+ * @param {Object} req Express request object containing the user's phone number in params
+ * @param {Object} res Express response object containing user details or an error message
+ * @returns {void}
+ */
 const findUserByPhoneNumber = async (req, res) => {
   const phoneNumber = req.params.phoneNumber;
   try {
