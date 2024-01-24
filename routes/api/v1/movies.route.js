@@ -1,32 +1,35 @@
 const express = require("express");
 const {
-  readAllMovies,
+  getAllMovies,
   createMovie,
-  readMovieByActorName,
-  readMoviesByDirectorName,
-  readMoviesByGenere,
+  getAllMoviesByGenre,
   updateMovie,
   deleteMovieById,
   getAllMoviesByRating,
   getAllMoviesByReleaseYear,
-  addRating,
-  addReviews,
-  readMovieByTitle,
+  addReviewAndRating,
+  getMovieByTitle,
+  getAllMoviesByActorName,
+  getMoviesByDirectorName,
 } = require("../../../controller/movies.controller");
+const authVerification = require("../../../middleware/authVerify");
+const { get } = require("mongoose");
 
 const movieRouter = express.Router();
 
-movieRouter.get("/", readAllMovies);
-movieRouter.get("/:title", readMovieByTitle);
-movieRouter.post("/", createMovie);
-movieRouter.get("/actor/:actorName", readMovieByActorName);
-movieRouter.get("/director/:directorName", readMoviesByDirectorName);
-movieRouter.get("/genre/:genreName", readMoviesByGenere);
-movieRouter.post("/:movieId", updateMovie);
-movieRouter.delete("/:movieId", deleteMovieById);
+// Public routes
+movieRouter.get("/", getAllMovies);
+movieRouter.get("/:title", getMovieByTitle);
+movieRouter.get("/actor/:actorName", getAllMoviesByActorName);
+movieRouter.get("/director/:directorName", getMoviesByDirectorName);
+movieRouter.get("/genre/:genreName", getAllMoviesByGenre);
 movieRouter.get("/rating", getAllMoviesByRating);
 movieRouter.get("/release-year", getAllMoviesByReleaseYear);
-movieRouter.post("/:movieId/rating", addRating);
-movieRouter.post("/:movieId/reviews", addReviews);
+
+// Private routes
+movieRouter.post("/", authVerification, createMovie);
+movieRouter.post("/:movieId", updateMovie);
+movieRouter.delete("/:movieId", deleteMovieById);
+movieRouter.post("/:movieId/rating", addReviewAndRating);
 
 module.exports = movieRouter;

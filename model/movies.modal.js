@@ -66,6 +66,7 @@ const movieSchema = mongoose.Schema(
           ref: "User",
         },
         text: String,
+        rating: Number,
       },
     ],
   },

@@ -69,10 +69,22 @@ const hashPassword = async (password) => {
   }
 };
 
+/**
+ * @description calculate average rating from array of reviews
+ * @param {Array} reviews - Array of object contains rating
+ * @return {Number} - average rating
+ */
+const getAverageRating = (reviews) => {
+  const averageRating =
+    reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length;
+  return averageRating;
+};
+
 module.exports = {
   hashPassword,
   generateToken,
   comparePassword,
   decodeToken,
   extractUserIdFromToken,
+  getAverageRating,
 };

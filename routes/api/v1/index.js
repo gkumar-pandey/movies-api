@@ -8,7 +8,7 @@ const routes = express.Router();
 routes.get("/", (req, res) => {
   res.json("Hello express");
 });
-routes.use("/movie", movieRouter);
+routes.use("/movies", movieRouter);
 routes.use("/auth", authRoutes);
 routes.use("/user", userRoutes);
 
