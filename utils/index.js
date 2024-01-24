@@ -20,12 +20,12 @@ const generateToken = (payload) => {
 const decodeToken = (token) => {
   const SECRET_KEY = process.env.SECRET_KEY;
   const decodedToken = jwt.verify(token, SECRET_KEY);
-  return decodeToken;
+  return decodedToken;
 };
 
 const extractUserIdFromToken = (decodedToken) => {
-  if (decodeToken && decodeToken._id) {
-    return decodeToken._id;
+  if (decodedToken && decodedToken._id) {
+    return decodedToken._id;
   } else {
     throw new Error("Invalid or missing user id in token");
   }
