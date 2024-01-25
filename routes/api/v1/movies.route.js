@@ -20,16 +20,16 @@ const movieRouter = express.Router();
 // Public routes
 movieRouter.get("/", getAllMovies);
 movieRouter.get("/rating", getAllMoviesByRating);
+movieRouter.get("/release-year", getAllMoviesByReleaseYear);
 movieRouter.get("/:title", getMovieByTitle);
 movieRouter.get("/actor/:actorName", getAllMoviesByActorName);
 movieRouter.get("/director/:directorName", getMoviesByDirectorName);
 movieRouter.get("/genre/:genreName", getAllMoviesByGenre);
-movieRouter.get("/release-year", getAllMoviesByReleaseYear);
 
 // Private routes
 movieRouter.post("/", authVerification, createMovie);
-movieRouter.post("/:movieId", updateMovie);
-movieRouter.delete("/:movieId", deleteMovieById);
-movieRouter.post("/:movieId/rating", addReviewAndRating);
+movieRouter.post("/:movieId", authVerification, updateMovie);
+movieRouter.delete("/:movieId", authVerification, deleteMovieById);
+movieRouter.post("/:movieId/rating", authVerification, addReviewAndRating);
 
 module.exports = movieRouter;
