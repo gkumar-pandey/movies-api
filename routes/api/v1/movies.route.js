@@ -19,11 +19,11 @@ const movieRouter = express.Router();
 
 // Public routes
 movieRouter.get("/", getAllMovies);
+movieRouter.get("/rating", getAllMoviesByRating);
 movieRouter.get("/:title", getMovieByTitle);
 movieRouter.get("/actor/:actorName", getAllMoviesByActorName);
 movieRouter.get("/director/:directorName", getMoviesByDirectorName);
 movieRouter.get("/genre/:genreName", getAllMoviesByGenre);
-movieRouter.get("/rating", getAllMoviesByRating);
 movieRouter.get("/release-year", getAllMoviesByReleaseYear);
 
 // Private routes

@@ -62,7 +62,7 @@ const getMovieByTitle = async (req, res) => {
  * @returns {void}
  */
 const getAllMoviesByActorName = async (req, res) => {
-  const actorName = req.params;
+  const { actorName } = req.params;
   try {
     const moviesOfActor = await Movie.find({ actors: actorName });
     if (!moviesOfActor || moviesOfActor.length == 0) {
@@ -88,7 +88,7 @@ const getAllMoviesByActorName = async (req, res) => {
  * @returns {Void}
  */
 const getMoviesByDirectorName = async (req, res) => {
-  const directorName = req.params;
+  const { directorName } = req.params;
   try {
     const movies = await Movie.find({
       director: { $regex: new RegExp(directorName, "i") },
@@ -244,6 +244,7 @@ const deleteMovieById = async (req, res) => {
 const getAllMoviesByRating = async (req, res) => {
   try {
     const movies = await Movie.find({}).sort({ rating: -1 });
+
     if (!movies) {
       return res
         .status(404)
