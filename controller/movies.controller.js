@@ -294,7 +294,7 @@ const getAllMoviesByReleaseYear = async (req, res) => {
  */
 const addReviewAndRating = async (req, res) => {
   const { movieId } = req.params;
-  const { rating, userId, reviewText } = req.body;
+  const { rating, userId, review } = req.body;
   try {
     const movie = await Movie.findById(movieId);
     if (!movie) {
