@@ -4,19 +4,19 @@ Welcome to the Movie API documentation, your go-to resource for comprehensive in
 
 These API provides comprehensive set of features to manage , authentication, Movies data , user rating and reviews on the platform
 
-#### Authentication Management
+#### [Authentication Management](#auth-management)
 
-1. **User Signup** : This endpoint enables the creation of new user accounts, allowing users to sign up for your application with ease.
-2. **User Login** : Users can securely log in to their accounts using this endpoint, gaining access to personalized app features and content.
+1. [**User Signup**](#post-user-signup) : This endpoint enables the creation of new user accounts, allowing users to sign up for your application with ease.
+2. [**User Login**](#post-user-login) : Users can securely log in to their accounts using this endpoint, gaining access to personalized app features and content.
 
-#### **User Management**
+#### [**User Management**](#user-management-1)
 
-1. **Changing Password :** Enhance account security by providing users with the ability to change their passwords securely.
-2. **Update profile picture :** Users can update their profile pictures, adding a personal touch to their profiles.
-3. **Updating Contact Details :** Keep user information up-to-date with this endpoint, allowing users to modify their contact details as needed.
-4. **Finding Users by Phone Number :** Users can search for other users by phone number, making it easier to connect within the app.
-5. **Adding Ratings and Reviews :** Users can share their thoughts and experiences by adding ratings and reviews for various app content.
-6. **Fetching Top 3 User Reviews with User Details:** Access the top 3 user reviews along with user details, providing valuable insights into popular content.
+1. **[Changing Password](#post-changing-password) :** Enhance account security by providing users with the ability to change their passwords securely.
+2. **[Update profile picture](#post-updating-profile-picture) :** Users can update their profile pictures, adding a personal touch to their profiles.
+3. **[Updating Contact Details](#post-updating-contact-details) :** Keep user information up-to-date with this endpoint, allowing users to modify their contact details as needed.
+4. **[Finding Users by Phone Number](#get-finding-user-by-phone-number) :** Users can search for other users by phone number, making it easier to connect within the app.
+5. **[Adding Ratings and Reviews](#post-adding-rating-and-reviews) :** Users can share their thoughts and experiences by adding ratings and reviews for various app content.
+6. **[Fetching Top 3 User Reviews with User Details](#get-fetching-top-3-user-reviews-with-user-details):** Access the top 3 user reviews along with user details, providing valuable insights into popular content.
 
 #### Movies Management
 
@@ -30,6 +30,7 @@ These API provides comprehensive set of features to manage , authentication, Mov
 ## API Base URL
 
 ```javascript
+
 https://movies-api-sage-sigma.vercel.app/
 
 ```
@@ -38,16 +39,18 @@ https://movies-api-sage-sigma.vercel.app/
 
 User Management allows you to securely create, update, retrieve, and manage user authentication and account details, providing seamless integration of authentication-related features into your application.
 
-## POST User signup
+## `POST` User signup
 
-`https://movies-api-sage-sigma.vercel.app/api/v1/auth/signup`
+```js
+https://movies-api-sage-sigma.vercel.app/api/v1/auth/signup
+```
 
 - **Endpoint** : `POST /api/v1/auth/signup`
 - **Description** : This endpoint enables the creation of new user accounts, allowing users to sign up for your application with ease.
 
 ### Body
 
-```
+```js
 {
     "username":"testuser",
     "password":"testpassword",
@@ -59,7 +62,7 @@ User Management allows you to securely create, update, retrieve, and manage user
 
 #### Request
 
-```
+```js
 POST /api/v1/auth/signup HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 Content-Length: 90
@@ -73,7 +76,7 @@ Content-Length: 90
 
 #### Response
 
-```
+```js
 {
     "message": "signup successfully",
     "user": {
@@ -88,16 +91,18 @@ Content-Length: 90
 }
 ```
 
-## POST User Login
+## `POST` User Login
 
-`https://movies-api-sage-sigma.vercel.app/api/v1/auth/login`
+```js
+https://movies-api-sage-sigma.vercel.app/api/v1/auth/login
+```
 
 - **Endpoint** : `POST /api/v1/auth/login`
 - **Description** : Users can securely log in to their accounts using this endpoint, gaining access to personalized app features and content.
 
 ### Body
 
-```
+```js
 {
     "email":"test@gmail.com",
     "password":"testpassword"
@@ -108,7 +113,7 @@ Content-Length: 90
 
 #### Request
 
-```
+```js
 POST /api/v1/auth/login HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 Content-Length: 63
@@ -121,7 +126,7 @@ Content-Length: 63
 
 #### Response
 
-```
+```js
  {
     "message": "Login successfully",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlOGEzYWE5NzU5YmY0YTA5OGQ4YTgiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzA5MDgzMjk1LCJleHAiOjE3MDkxNjk2OTV9.Gu48EhWYglUy3sXrQHegBNgk0AOZwAS6FUcgDIxelfQ",
@@ -140,9 +145,11 @@ Content-Length: 63
 
 User management provides user to change password, profile picture , contact details like phone number, address and add rating and reviews to the movies.
 
-## POST Changing Password
+## `POST` Changing Password
 
-`https://movies-api-sage-sigma.vercel.app/api/v1/user/password`
+```js
+https://movies-api-sage-sigma.vercel.app/api/v1/user/password
+```
 
 - **Endpoint** : `POST /api/v1/user/password`
 - **Description** : Enhance account security by providing users with the ability to change their passwords securely.
@@ -155,7 +162,7 @@ User management provides user to change password, profile picture , contact deta
 
 #### Body
 
-```
+```js
 {
     "currentPassword":"testpassword",
     "newPassword":"newtestpassword"
@@ -166,7 +173,7 @@ User management provides user to change password, profile picture , contact deta
 
 **Request**
 
-```
+```js
 POST /api/v1/user/password HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlOGEzYWE5NzU5YmY0YTA5OGQ4YTgiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzA5MDgzMjk1LCJleHAiOjE3MDkxNjk2OTV9.Gu48EhWYglUy3sXrQHegBNgk0AOZwAS6FUcgDIxelfQ
@@ -180,7 +187,7 @@ Content-Length: 77
 
 **Response**
 
-```
+```js
 {
     "success": true,
     "message": "Password updated successfully.",
@@ -196,16 +203,18 @@ Content-Length: 77
 }
 ```
 
-## POST Updating Profile Picture
+## `POST` Updating Profile Picture
 
-`https://movies-api-sage-sigma.vercel.app/api/v1/user/profile`
+```js
+https://movies-api-sage-sigma.vercel.app/api/v1/user/profile
+```
 
 - **Endpoint** : `POST /api/v1/user/profile`
 - **Description** : Users can update their profile pictures, adding a personal touch to their profiles.
 
 #### Body
 
-```
+```js
 {
     "newProfilePicture": "<https://example.com/new-profile.jpg>"
 }
@@ -215,7 +224,7 @@ Content-Length: 77
 
 **Request**
 
-```
+```js
 POST /api/v1/user/profile HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlOGEzYWE5NzU5YmY0YTA5OGQ4YTgiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzA5MDgzMjk1LCJleHAiOjE3MDkxNjk2OTV9.Gu48EhWYglUy3sXrQHegBNgk0AOZwAS6FUcgDIxelfQ
@@ -227,7 +236,7 @@ Content-Length: 68
 ```
 
 **Response** 
-```
+```js
 {
     "success": true,
     "message": "Profile picture updated.",
@@ -243,13 +252,15 @@ Content-Length: 68
     }
 }
 ```
-## POST Updating Contact Details
-`https://movies-api-sage-sigma.vercel.app/api/v1/user/update-contact`
+## `POST` Updating Contact Details
+```js
+https://movies-api-sage-sigma.vercel.app/api/v1/user/update-contact
+```
 - **Endpoint** : `POST /api/v1/user/update-contact`
 - **Description** : Keep user information up-to-date with this endpoint, allowing users to modify their contact details as needed.
  
 #### Body
-```
+```js
 {
     "phoneNumber": "7779843621",
     "address": "patna bihar"
@@ -257,7 +268,7 @@ Content-Length: 68
 ```
 #### Example
 **Request**
-```
+```js
 POST /api/v1/user/update-contact HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlOGEzYWE5NzU5YmY0YTA5OGQ4YTgiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzA5MDgzMjk1LCJleHAiOjE3MDkxNjk2OTV9.Gu48EhWYglUy3sXrQHegBNgk0AOZwAS6FUcgDIxelfQ
@@ -269,7 +280,7 @@ Content-Length: 65
 }
 ```
 **Response**
-```
+```js
 {
     "message": "contact details updated",
     "success": true,
@@ -286,18 +297,20 @@ Content-Length: 65
     }
 }
 ```
-## GET Finding User by Phone Number
-`https://movies-api-sage-sigma.vercel.app/api/v1/user/phone/1234567890`
+## `GET` Finding User by Phone Number
+```js
+https://movies-api-sage-sigma.vercel.app/api/v1/user/phone/1234567890
+```
 - **Endpoint** : `GET /api/v1/user/phone/:phoneNumber`
 - **Description** : Users can search for other users by phone number, making it easier to connect within the app.
 #### Example
 **Request**
-```
+```js
 GET /api/v1/user/phone/1234567890 HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 ``` 
 **Response**
-```
+```js
 {
     "success": true,
     "message": "user found",
@@ -315,12 +328,12 @@ Host: movies-api-sage-sigma.vercel.app
     }
 }
 ```
-## POST Adding Rating And Reviews
+## `POST` Adding Rating And Reviews
 `https://movies-api-sage-sigma.vercel.app/api/v1/movies/65b169fd8e186e2f42655b59/rating`
 - **Endpoint :** **`POST /api/v1/movies/:movieId/rating`**
 - **Description :** Users can share their thoughts and experiences by adding ratings and reviews for various app content.
 #### Body
-```
+```js
 {
     "userId": "65de8a3aa9759bf4a098d8a8",
         "rating": 8.5,
@@ -329,7 +342,7 @@ Host: movies-api-sage-sigma.vercel.app
 ```
 #### Exmaple
 **Request**
-```
+```js
 POST /api/v1/movies/65b169fd8e186e2f42655b59/rating HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlOGEzYWE5NzU5YmY0YTA5OGQ4YTgiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzA5MDgzMjk1LCJleHAiOjE3MDkxNjk2OTV9.Gu48EhWYglUy3sXrQHegBNgk0AOZwAS6FUcgDIxelfQ
@@ -342,7 +355,7 @@ Content-Length: 123
 }
 ```
 **Response**
-```
+```js
 {
     "success": true,
     "message": "Review and rating added",
@@ -350,18 +363,20 @@ Content-Length: 123
 }
 ```
 
-## GET Fetching Top 3 User Reviews with User Details
-`https://movies-api-sage-sigma.vercel.app/api/v1/movies/65b169fd8e186e2f42655b59/reviews`
+## `GET` Fetching Top 3 User Reviews with User Details
+```js
+https://movies-api-sage-sigma.vercel.app/api/v1/movies/65b169fd8e186e2f42655b59/reviews
+```
 - **Endpoint :** **`GET /api/v1/movies/:movieId/reviews`**
 - **Description :** Access the top 3 user reviews along with user details, providing valuable insights into popular content.
 #### Example
 **Request**
-```
+```js
 GET /api/v1/movies/65b169fd8e186e2f42655b59/reviews HTTP/1.1
 Host: movies-api-sage-sigma.vercel.app
 ```
 **Response**
-```
+```js
 {
     "success": true,
     "reviews": [
