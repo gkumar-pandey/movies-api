@@ -334,6 +334,41 @@ const addReviewAndRating = async (req, res) => {
   }
 };
 
+/**
+ * @route GET /api/v1/movies/:movieId/reviews
+ * @description fetch top 3 user reviews
+ * @param {*} req
+ * @param {*} res
+ */
+const getMovieReviewWithUserDetails = async (req, res) => {
+  try {
+    const { movieId } = req.params;
+    const movie = await Movie.findById(movieId).populate({
+      path: "reviews",
+      populate: {
+        path: "user",
+        select: "username profilePicture",
+      },
+    });
+    if (!movie) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Movie not found." });
+    }
+    
+    const reviews = movie.reviews
+      .slice(0, 3)
+      .map((review) => ({ review: review.text, user: review.user }));
+    return res.status(200).json({ success: true, reviews });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   createMovie,
   getAllMovies,
@@ -346,4 +381,5 @@ module.exports = {
   getAllMoviesByRating,
   getAllMoviesByReleaseYear,
   addReviewAndRating,
+  getMovieReviewWithUserDetails,
 };

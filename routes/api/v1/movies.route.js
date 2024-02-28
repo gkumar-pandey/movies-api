@@ -11,6 +11,7 @@ const {
   getMovieByTitle,
   getAllMoviesByActorName,
   getMoviesByDirectorName,
+  getMovieReviewWithUserDetails,
 } = require("../../../controller/movies.controller");
 const authVerification = require("../../../middleware/authVerify");
 const { get } = require("mongoose");
@@ -25,6 +26,7 @@ movieRouter.get("/:title", getMovieByTitle);
 movieRouter.get("/actor/:actorName", getAllMoviesByActorName);
 movieRouter.get("/director/:directorName", getMoviesByDirectorName);
 movieRouter.get("/genre/:genreName", getAllMoviesByGenre);
+movieRouter.get("/:movieId/reviews",getMovieReviewWithUserDetails)
 
 // Private routes
 movieRouter.post("/", authVerification, createMovie);
