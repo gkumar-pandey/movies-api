@@ -15,6 +15,7 @@ app.use(express.json());
 const cors = require("cors");
 
 app.use(helmet());
+app.use(cors());
 // const allowedOrigins = ["http://localhost:3000"];
 
 // app.use(
